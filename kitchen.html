@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Kitchen Orders</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#eef7ff;
+text-align:center;
+}
+
+.order{
+border:2px solid #ddd;
+margin:10px;
+padding:10px;
+background:white;
+border-radius:8px;
+}
+
+button{
+background:red;
+color:white;
+border:none;
+padding:5px 10px;
+border-radius:5px;
+cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>👩‍🍳 Kitchen Orders</h1>
+
+<div id="orders"></div>
+
+<script>
+
+function loadOrders(){
+
+let orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+const ordersDiv = document.getElementById("orders");
+
+ordersDiv.innerHTML="";
+
+orders.forEach((item,index)=>{
+
+let div=document.createElement("div");
+
+div.className="order";
+
+div.innerHTML=`
+${item}
+<button onclick="done(${index})">Done</button>
+`;
+
+ordersDiv.appendChild(div);
+
+});
+
+}
+
+function done(index){
+
+let orders = JSON.parse(localStorage.getItem("orders"));
+
+orders.splice(index,1);
+
+localStorage.setItem("orders",JSON.stringify(orders));
+
+loadOrders();
+
+}
+
+setInterval(loadOrders,1000);
+
+</script>
+
+</body>
+</html>

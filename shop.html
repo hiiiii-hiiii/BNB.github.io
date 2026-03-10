@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Breakfast Shop</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#fff8e8;
+text-align:center;
+}
+
+.item{
+border:2px solid #ddd;
+padding:20px;
+margin:15px;
+display:inline-block;
+width:200px;
+border-radius:10px;
+background:white;
+}
+
+button{
+background:#ff9800;
+border:none;
+padding:10px;
+margin:5px;
+color:white;
+font-size:16px;
+border-radius:5px;
+cursor:pointer;
+}
+
+button:hover{
+background:#e68900;
+}
+
+#cartButton{
+position:fixed;
+top:20px;
+right:20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>🍳 Breakfast Shop</h1>
+
+<button id="cartButton" onclick="window.location='cart.html'">🛒 View Cart</button>
+
+<div id="menu"></div>
+
+<script>
+
+const menu = [
+"Toast",
+"Pancakes",
+"Eggs",
+"Bacon",
+"Orange Juice",
+"Tea",
+"Coffee"
+];
+
+const menuDiv = document.getElementById("menu");
+
+menu.forEach(item=>{
+
+let div=document.createElement("div");
+div.className="item";
+
+div.innerHTML=`
+<h2>${item}</h2>
+<button onclick="addToCart('${item}')">Add to Cart</button>
+`;
+
+menuDiv.appendChild(div);
+
+});
+
+function addToCart(item){
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+cart.push(item);
+
+localStorage.setItem("cart", JSON.stringify(cart));
+
+alert(item + " added to cart!");
+
+}
+
+</script>
+
+</body>
+</html>

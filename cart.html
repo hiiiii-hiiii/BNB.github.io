@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Your Cart</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f0f7ff;
+text-align:center;
+}
+
+.item{
+border:2px solid #ddd;
+margin:10px;
+padding:10px;
+background:white;
+border-radius:8px;
+}
+
+button{
+padding:10px;
+margin:5px;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
+.remove{
+background:red;
+color:white;
+}
+
+.send{
+background:green;
+color:white;
+font-size:18px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>🛒 Your Cart</h1>
+
+<div id="cartItems"></div>
+
+<button class="send" onclick="sendToKitchen()">Send To Kitchen 🍳</button>
+
+<script>
+
+function loadCart(){
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+const cartDiv = document.getElementById("cartItems");
+
+cartDiv.innerHTML="";
+
+cart.forEach((item,index)=>{
+
+let div=document.createElement("div");
+
+div.className="item";
+
+div.innerHTML=`
+${item}
+<button class="remove" onclick="removeItem(${index})">Remove</button>
+`;
+
+cartDiv.appendChild(div);
+
+});
+
+}
+
+function removeItem(index){
+
+let cart = JSON.parse(localStorage.getItem("cart"));
+
+cart.splice(index,1);
+
+localStorage.setItem("cart", JSON.stringify(cart));
+
+loadCart();
+
+}
+
+function sendToKitchen(){
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+orders = orders.concat(cart);
+
+localStorage.setItem("orders", JSON.stringify(orders));
+
+localStorage.removeItem("cart");
+
+alert("Order sent to kitchen!");
+
+loadCart();
+
+}
+
+loadCart();
+
+</script>
+
+</body>
+</html>
